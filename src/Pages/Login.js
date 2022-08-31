@@ -13,29 +13,36 @@ export const Login = () => {
     const send = async e => {
         e.preventDefault();
 
-        const response = axios({
+        const config = {
+            withCredentials: true,
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded;charset=utf-8'
+            }
+        }
+
+        axios({
             method: 'POST',
             url: BASE_URL+"/api/login",
             data: qs.stringify({
               username: username,
               password: password
             }),
-            headers: {
-              'content-type': 'application/x-www-form-urlencoded;charset=utf-8'
-            }
+            config
+        }).then(function (response) {
+
+          localStorage.setItem('token',response.data.accessToken);
+
+          console.log(axios.defaults.headers.common['Authorization'],"TOKEN");
+          console.log(response.data.accessToken,response.data.refreshToken);
         });
-        
-        // const response = await axios.post(BASE_URL+"/api/login",{
-        //     username,password
-        // },{withCredentials:true});
 
-        console.log(response.data);
-
-        // setNavigate(true);
+        setTimeout(()=>{
+          setNavigate(true);
+        },1000)
     }
 
     if(navigate){
-        return <Navigate to="/"/>
+        return <Navigate to="/home"/>
     }
 
     return <main className="form-signin">
