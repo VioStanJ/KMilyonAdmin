@@ -14,13 +14,16 @@ export const Home = () => {
     const [name,setName] = useState("");
 
     useEffect(()=>{
-        console.log("Get Profile");
-        axios.get(BASE_API+"/users/profile").then((res)=>{
-            console.log(res.data);
-            setName(res.data.username);
-        }).catch((err)=>{
-            console.log(err);
-        });
+        const getProfile = async () => {
+
+            axios.get(BASE_API+"/users/profile").then((res)=>{
+                console.log(res.data);
+                setName(res.data.username);
+            }).catch((err)=>{
+                console.log(err);
+            });
+        }
+        getProfile();
     },[]);
 
     return <div>
