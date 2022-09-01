@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
-export const Header = () => {
+export default class Header extends Component{
 
+  render(){
     return <header>
     <div className="px-3 py-2 bg-dark text-white">
       <div className="container">
@@ -47,4 +48,5 @@ export const Header = () => {
       </div>
     </div>
   </header>;
+  }
 }
