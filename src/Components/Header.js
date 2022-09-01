@@ -19,9 +19,9 @@ export const Header = () => {
               </Link>
             </li>
             <li>
-              <Link to="/home" className="nav-link text-white">
+              <Link to="/login" className="nav-link text-white">
                 {/* <svg className="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#speedometer2"></use></svg> */}
-                Dashboard
+                Login
               </Link>
             </li>
             <li>
