@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { BASE_API} from '../Utils/Utils';
+import { BASE_API,AxiosConfig} from '../Utils/Utils';
 
 export class Home extends Component{
 
@@ -17,11 +17,12 @@ export class Home extends Component{
         console.log("DId Mount");
         setTimeout(() => {
             if(this.state.load){
+                AxiosConfig();
                 axios.get(BASE_API+"/users/profile").then((res)=>{
                     console.log(res.data,"Profile");
                     this.setState({name:res.data.username,load:false});
                 }).catch((err)=>{
-                    console.log(err);
+                    console.log(err,'err home');
                 });
             }
         }, 1000);
