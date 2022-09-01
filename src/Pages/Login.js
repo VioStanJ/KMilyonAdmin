@@ -31,8 +31,8 @@ export const Login = () => {
         }).then(function (response) {
 
           localStorage.setItem('token',response.data.accessToken);
+          localStorage.setItem('refresh',response.data.refreshToken);
 
-          console.log(axios.defaults.headers.common['Authorization'],"TOKEN");
           console.log(response.data.accessToken,response.data.refreshToken);
         });
 

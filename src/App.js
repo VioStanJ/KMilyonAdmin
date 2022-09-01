@@ -3,6 +3,7 @@ import { Login } from './Pages/Login';
 import {BrowserRouter,Routes,Route} from 'react-router-dom';
 import { Header } from './Components/Header';
 import { Home } from './Pages/Home';
+import './Interceptors/axios';
 
 function App() {
   return (

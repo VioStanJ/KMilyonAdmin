@@ -1,32 +1,38 @@
-import React, { Component, useEffect, useState } from 'react';
-import {BASE_API,AxiosConfig} from '../Utils/Utils';
+import React, { Component } from 'react';
 import axios from 'axios';
+import {AxiosConfig, BASE_API} from '../Utils/Utils';
 
-export const Home = () => {
+export class Home extends Component{
 
-    // const config = {
-    //     // withCredentials: true,
-    //     headers: {'Authorization': 'Bearer '+"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaG9uIiwicm9sZXMiOlsiVVNFUiJdLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvYXBpL2xvZ2luIiwiZXhwIjoxNjYyMDUyMTM3fQ.TCC-h0PIg6abkLo2g1P4NVgNyNCP3P7Vywfnoz4JCIk"}
-    // };
+    constructor(props){
+        super(props);
 
-    AxiosConfig();
-    
-    const [name,setName] = useState("");
-
-    useEffect(()=>{
-        const getProfile = async () => {
-
-            axios.get(BASE_API+"/users/profile").then((res)=>{
-                console.log(res.data);
-                setName(res.data.username);
-            }).catch((err)=>{
-                console.log(err);
-            });
+        this.state = {
+            load : true,
+            name:''
         }
-        getProfile();
-    },[]);
+    }
 
-    return <div>
-        <h1>Hi {name} !</h1>
-    </div>
+    componentDidMount(){
+        console.log("DId Mount");
+        setTimeout(() => {
+            if(this.state.load){
+                AxiosConfig();
+                axios.get(BASE_API+"/users/profile").then((res)=>{
+                    console.log(res.data,"Profile");
+                    this.setState({name:res.data.username,load:false});
+                }).catch((err)=>{
+                    console.log(err);
+                });
+            }
+        }, 1000);
+    }
+
+    render(){ 
+            if(this.state.load){
+                return <h1>Loading</h1>;
+            }else{
+                return <h1>Hi {this.state.name} !</h1>;
+            }
+    }
 }
