@@ -46,7 +46,7 @@ export const Login = () => {
     }
 
     return (
-      <div className='flex-row' style={{background:"#f5f5f5"}}>
+      <div className='flex-row' style={{height:'100vh',background:"#f5f5f5"}}>
         <main className="form-signin">
             <form onSubmit={send}>
               <h1 className="h3 mb-3 fw-normal text-center">KMilyon</h1>

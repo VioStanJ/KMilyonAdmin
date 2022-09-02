@@ -4,6 +4,7 @@ import {BrowserRouter,Routes,Route} from 'react-router-dom';
 import { Home } from './Pages/Home';
 import './Interceptors/axios';
 import Container from './Components/Container';
+import Ticket from './Pages/Ticket';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} /> 
         <Route path="/home" element={<Container><Home /></Container>} /> 
+        <Route path="/ticket" element={<Container><Ticket /></Container>} /> 
       </Routes>
     </BrowserRouter>
   );
