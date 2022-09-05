@@ -48,14 +48,13 @@ export const Login = () => {
     }
 
     return (
-      <div className='flex-row form_bg' style={{height:'100vh',background:"",backgroundImage:'url('+bg+')'}}>
+      <div className='flex-row form_bg' style={{backgroundImage:'url('+bg+')'}}>
         <div style={{height:"100%",backgroundColor:"rgba(0, 0, 0,0.6)"}}>
         <main className="form-signin">
             <img src={km} alt="Krezi Milyon" width={300}/>
             <br /><br />
             <form onSubmit={send}>
-            
-
+    
               <div className="form-floating">
                 <input type="text" className="form-control" id="floatingInput" placeholder="username"
                     onChange={e => setUsername(e.target.value)}/>
