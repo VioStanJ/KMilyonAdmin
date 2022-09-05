@@ -14,16 +14,17 @@ export class Home extends Component{
 
     componentDidMount(){
         console.log("DId Mount");
-        setTimeout(() => {
+        // setTimeout(() => {
             if(this.state.load){
                 axios.get("/users/profile").then((res)=>{
                     console.log(res.data,"Profile");
-                    this.setState({name:res.data.username,load:false});
+                    this.setState({name:res.data.username});
                 }).catch((err)=>{
                     console.log(err,'err home');
                 });
+                this.setState({load:false});
             }
-        }, 1000);
+        // }, 1000);
     }
 
     render(){ 

@@ -13,13 +13,13 @@ export default class NavBar extends Component{
             <ul className="nav nav-pills flex-column mb-auto" style={{marginLeft:10}}>
               <li className="nav-item">
                 <Link to="/home" className="nav-link active" aria-current="page">
-                <i class="fa-solid fa-gauge pr-5"></i>
+                <i className="fa-solid fa-gauge pr-5"></i>
                   Pano
                 </Link>
               </li>
               <li>
                 <Link to="/ticket" className="nav-link text-white">
-                <i class="fa-solid fa-ticket"></i>
+                <i className="fa-solid fa-ticket"></i>
                   Tikè
                 </Link>
               </li>
