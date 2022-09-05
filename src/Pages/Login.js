@@ -35,12 +35,15 @@ export const Login = () => {
           localStorage.setItem('token',response.data.accessToken);
           localStorage.setItem('refresh',response.data.refreshToken);
 
+          setTimeout(()=>{
+            setNavigate(true);
+          },1000)
+
           console.log(response.data.accessToken,response.data.refreshToken);
+        }).catch((err)=>{
+          alert("Invalid Credentials");
         });
 
-        setTimeout(()=>{
-          setNavigate(true);
-        },1000)
     }
 
     if(navigate){
