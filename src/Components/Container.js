@@ -7,13 +7,14 @@ export default class Container extends Component{
     render(){
         return <div style={{height:"100%",overflow:"hidden"}}>
             <Header/>
-            <div style={{height:"100%",background:"lightgray"}}>
-                <div style={{height:"100%"}}>
-                    <NavBar/>
-                </div>
-                <div>
+            <div className='row' style={{height:"100%",background:"lightgray"}}>
+
+                <NavBar/>
+
+                <div className='col-9'>
                     {this.props.children}
                 </div>
+
             </div>
         </div>;
     }

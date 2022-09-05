@@ -103,3 +103,6 @@
 
 .fw-semibold { font-weight: 600; }
 .lh-tight { line-height: 1.25; }
+.nav-link>i{
+  padding-right: 6px!important;
+}

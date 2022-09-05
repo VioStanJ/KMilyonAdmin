@@ -5,19 +5,21 @@ export default class NavBar extends Component{
 
     render() {
         return (
-            <div className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style={{width:"280px",height:"100%"}}>
-            <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+            <div className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark col-2" style={{height:"100%"}}>
+            {/* <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
               <span className="fs-4">Menu</span>
-            </a>
-            <hr/>
-            <ul className="nav nav-pills flex-column mb-auto">
+            </a> */}
+            {/* <hr/> */}
+            <ul className="nav nav-pills flex-column mb-auto" style={{marginLeft:10}}>
               <li className="nav-item">
                 <Link to="/home" className="nav-link active" aria-current="page">
+                <i class="fa-solid fa-gauge pr-5"></i>
                   Pano
                 </Link>
               </li>
               <li>
                 <Link to="/ticket" className="nav-link text-white">
+                <i class="fa-solid fa-ticket"></i>
                   Tikè
                 </Link>
               </li>

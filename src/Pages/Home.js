@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { BASE_API} from '../Utils/Utils';
 
 export class Home extends Component{
 

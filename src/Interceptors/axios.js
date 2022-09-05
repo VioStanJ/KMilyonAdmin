@@ -12,7 +12,7 @@ axios.interceptors.request.use(
         // The default token is the access token
         let token = localStorage.getItem("token");
         // When the refresh token endpoint is call , send the refresh token 
-        if(config.url == (BASE_URL+"/refreshToken")){
+        if(config.url === (BASE_URL+"/refreshToken")){
             token = localStorage.getItem("refresh");
         }
 
@@ -41,7 +41,7 @@ axios.interceptors.response.use(
             // Get another Access Token
             axios.get(BASE_URL+"/refreshToken").then((res)=>{
                 console.log(res,'ACCEESS TOKEN');
-                if(res.status == 200 && !refresh){
+                if(res.status === 200 && !refresh){
         
                     refresh = true;
         
