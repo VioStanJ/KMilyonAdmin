@@ -3,12 +3,20 @@
   max-width: 330px;
   padding: 15px;
   margin: auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .form-signin .checkbox {
   font-weight: 400;
 }
-
+.form_bg{
+  background-image: url('/src/ressources/images/background.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
 .form-signin .form-floating:focus-within {
   z-index: 2;
 }

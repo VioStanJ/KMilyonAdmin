@@ -3,6 +3,8 @@ import React, { Component,useState } from 'react';
 import {BASE_URL} from '../Utils/Utils';
 import {Navigate} from 'react-router-dom';
 import qs from 'qs';
+import km from '../ressources/images/km.png';
+import bg from '../ressources/images/background.jpg';
 
 export const Login = () => {
 
@@ -46,10 +48,13 @@ export const Login = () => {
     }
 
     return (
-      <div className='flex-row' style={{height:'100vh',background:"#f5f5f5"}}>
+      <div className='flex-row form_bg' style={{height:'100vh',background:"",backgroundImage:'url('+bg+')'}}>
+        <div style={{height:"100%",backgroundColor:"rgba(0, 0, 0,0.6)"}}>
         <main className="form-signin">
+            <img src={km} alt="Krezi Milyon" width={300}/>
+            <br /><br />
             <form onSubmit={send}>
-              <h1 className="h3 mb-3 fw-normal text-center">KMilyon</h1>
+            
 
               <div className="form-floating">
                 <input type="text" className="form-control" id="floatingInput" placeholder="username"
@@ -62,9 +67,12 @@ export const Login = () => {
                 <label htmlFor="floatingPassword">Password</label>
               </div>
 
+              <br />
+
               <button className="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
             </form>
           </main>
+        </div>
       </div>
     );
 }
