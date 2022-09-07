@@ -5,7 +5,7 @@ export default class NavBar extends Component{
 
     render() {
         return (
-            <div className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark col-2" style={{height:"100%"}}>
+            <div className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style={{height:"100%"}} id="navbar">
             {/* <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
               <span className="fs-4">Menu</span>
             </a> */}
@@ -15,6 +15,12 @@ export default class NavBar extends Component{
                 <Link to="/home" className="nav-link active" aria-current="page">
                 <i className="fa-solid fa-gauge pr-5"></i>
                   Pano
+                </Link>
+              </li>
+              <li>
+                <Link to="/gametype" className="nav-link text-white">
+                <i class="fa-solid fa-list"></i>
+                  Tip Jwèt
                 </Link>
               </li>
               <li>

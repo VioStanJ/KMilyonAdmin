@@ -7,6 +7,7 @@ import './Interceptors/axios';
 import Container from './Components/Container';
 import Ticket from './Pages/Ticket';
 import Welcome from './Pages/Welcome';
+import GameType from './Pages/GameType';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/login" element={<Login />} /> 
         <Route path="/home" element={<Container><Home /></Container>} /> 
         <Route path="/ticket" element={<Container><Ticket /></Container>} /> 
+        <Route path="/gametype" element={<Container><GameType /></Container>} /> 
       </Routes>
     </BrowserRouter>
   );

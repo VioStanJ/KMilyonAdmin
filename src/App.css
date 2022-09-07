@@ -106,3 +106,20 @@
 .nav-link>i{
   padding-right: 6px!important;
 }
+/* CONTENT */
+#parent-content{
+  display: flex;
+  flex-direction: row;
+}
+#navbar{
+  flex-basis: 300px;
+  -webkit-box-shadow: 2px 0px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 2px 0px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 2px 0px 5px 0px rgba(0,0,0,0.75);
+}
+#main-content{
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
