@@ -13,25 +13,22 @@ export class Home extends Component{
     }
 
     componentDidMount(){
-        console.log("DId Mount");
-        // setTimeout(() => {
-            if(this.state.load){
-                axios.get("/users/profile").then((res)=>{
-                    console.log(res.data,"Profile");
-                    this.setState({name:res.data.username});
-                }).catch((err)=>{
-                    console.log(err,'err home');
-                });
-                this.setState({load:false});
-            }
-        // }, 1000);
+        if(this.state.load){
+            axios.get("/users/profile").then((res)=>{
+                console.log(res.data,"Profile");
+                this.setState({name:res.data.username});
+            }).catch((err)=>{
+                console.log(err,'err home');
+            });
+            this.setState({load:false});
+        }
     }
 
     render(){ 
-            if(this.state.load){
-                return <h1>Loading</h1>;
-            }else{
-                return <h1>Hi {this.state.name} !</h1>;
-            }
+        if(this.state.load){
+            return <h1>Loading</h1>;
+        }else{
+            return <h1>Hi {this.state.name} !</h1>;
+        }
     }
 }

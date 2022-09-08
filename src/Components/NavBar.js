@@ -19,7 +19,7 @@ export default class NavBar extends Component{
               </li>
               <li>
                 <Link to="/gametype" className="nav-link text-white">
-                <i class="fa-solid fa-list"></i>
+                <i className="fa-solid fa-list"></i>
                   Tip Jwèt
                 </Link>
               </li>
