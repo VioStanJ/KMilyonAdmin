@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import DataTable from 'react-data-table-component';
+import { Modal } from 'react-bootstrap';
 
 export default class GameType extends Component{
 
@@ -10,7 +11,9 @@ export default class GameType extends Component{
 
         this.state = {
             load : true,
-            types:[]
+            types:[],
+            show : false,
+            game : {}
         }
     }
 
@@ -29,21 +32,33 @@ export default class GameType extends Component{
         }
     }
 
+    edit = (type) => {
+        console.log(type);
+        this.setState({show:true,game:type});
+    }
+
     render() {
         const columns = [
             {
+                name: 'ID',
+                selector : row => row.id
+            },
+            {
                 name: 'Non',
-                selector : 'name'
+                selector : row => row.name
             },
             {
                 name: 'Imaj',
-                selector: 'icon',
+                selector: row => row.icon,
                 sortable: true,
             },
-            {
-                name: 'Option',
-                cell : row => <span></span>
-            }
+            // {
+            //     name: 'Opsyon',
+            //     cell : row => <span>
+            //         <button className='btn btn-primary' onClick={()=>this.edit(row)}>Modifye</button>
+            //         <button className='btn btn-danger ms-3'>Efase</button>
+            //     </span>
+            // }
         ]
 
         if(this.state.load){
@@ -52,6 +67,7 @@ export default class GameType extends Component{
             return <div className='container'>
             <div className="row">
                 <div>
+
                     <h4 className='orange'>Tip Jwèt</h4>
                     <nav aria-label="breadcrumb">
                         <ol className="breadcrumb">
@@ -71,6 +87,24 @@ export default class GameType extends Component{
                 striped={true}
                 data={this.state.types}
                 />
+            {/* Modal */}
+            <Modal show={this.state.show} 
+                onHide={()=>this.setState({show:false})} 
+                animation={false}
+                centered>
+                <Modal.Header closeButton>
+                <Modal.Title>Modifye - {this.state.game.name}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+                <Modal.Footer>
+                {/* <Button variant="secondary" onClick={handleClose}>
+                    Close
+                </Button>
+                <Button variant="primary" onClick={handleClose}>
+                    Save Changes
+                </Button> */}
+                </Modal.Footer>
+            </Modal>
         </div>
         }
     }
