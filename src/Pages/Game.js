@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import DataTable from 'react-data-table-component';
 import { Modal } from 'react-bootstrap';
 
-export default class GameType extends Component{
+export default class Game extends Component{
 
     constructor(props){
         super(props);
@@ -68,18 +68,18 @@ export default class GameType extends Component{
             <div className="row">
                 <div>
 
-                    <h4 className='orange'>Tip Jwèt</h4>
+                    <h4 className='text-success'>Jwèt</h4>
                     <nav aria-label="breadcrumb">
-                        <ol className="breadcrumb">
-                            <li className="breadcrumb-item"><Link to="/home" className='orange'>Akèy</Link></li>
-                            <li className="breadcrumb-item active orange" aria-current="page">Lis Tip Jwèt yo</li>
+                        <ol className="breadcrumb ">
+                            <li className="breadcrumb-item"><Link to="/home" className='text-success'>Akèy</Link></li>
+                            <li className="breadcrumb-item active text-success" aria-current="page">Jwèt yo</li>
                         </ol>
                     </nav>
                 </div>
             </div>
             <hr />
             <br />
-            <h4 className="orange">{this.state.types.length} Tip Jwèt</h4>           
+            <h4 className="text-success">{this.state.types.length} Tip Jwèt</h4>           
             <DataTable
                 columns={columns}
                 pagination={true}
