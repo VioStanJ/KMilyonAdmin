@@ -19,7 +19,7 @@ export default class NavBar extends Component{
               </li>
               <li>
                 <Link to="/game" className="nav-link text-success">
-                <i class="fa-solid fa-gamepad"></i>
+                <i className="fa-solid fa-gamepad"></i>
                   Jwèt
                 </Link>
               </li>

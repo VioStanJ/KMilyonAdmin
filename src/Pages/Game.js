@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import DataTable from 'react-data-table-component';
 import { Modal } from 'react-bootstrap';
+import CreateGame from '../Components/CreateGame';
 
 export default class Game extends Component{
 
@@ -11,54 +12,85 @@ export default class Game extends Component{
 
         this.state = {
             load : true,
-            types:[],
+            games:[],
             show : false,
-            game : {}
+            game : {},
+            create:false,
+            types:[]
         }
     }
 
     componentDidMount(){
         if(this.state.load){
-            axios.get("/gametypes/all").then((res)=>{
-                console.log(res.data.data,"ProfiGame Typesle");
-                this.setState({load:false});
-                if(res.data.status === 200){
-                    this.setState({types:res.data.data});
-                }
-            }).catch((err)=>{
-                console.log(err,'err game types');
-            });
-            this.setState({load:false});
+            this.refresh();
         }
+    }
+
+    refresh = () => {
+        axios.get("/games/all").then((res)=>{
+            console.log(res,"Games");
+            this.setState({load:false});
+            if(res.data.status === 200){
+                this.setState({games:res.data.data});
+            }
+        }).catch((err)=>{
+            console.log(err,'err games');
+        });
+        this.setState({load:false});
     }
 
     edit = (type) => {
         console.log(type);
-        this.setState({show:true,game:type});
+        // this.setState({show:true,game:type});
+    }
+
+    openCreateModal = () => {
+        axios.get("/gametypes/all").then((res)=>{
+            this.setState({load:false});
+            if(res.data.status === 200){
+                this.setState({types:res.data.data});
+            }
+        }).catch((err)=>{
+            console.log(err,'err game types');
+        });
+
+        this.setState({show:true});
+    }
+
+    save = () => {
+        console.log("saved");
     }
 
     render() {
         const columns = [
             {
-                name: 'ID',
-                selector : row => row.id
+                name: 'Imaj',
+                selector : row => row.image
             },
             {
                 name: 'Non',
                 selector : row => row.name
             },
             {
-                name: 'Imaj',
-                selector: row => row.icon,
+                name: 'Slug',
+                selector : row => row.slug
+            },
+            {
+                name: 'Tip',
+                selector : row => row.game_type.name
+            },
+            {
+                name: 'Deskripsyon',
+                selector: row => row.description,
                 sortable: true,
             },
-            // {
-            //     name: 'Opsyon',
-            //     cell : row => <span>
-            //         <button className='btn btn-primary' onClick={()=>this.edit(row)}>Modifye</button>
-            //         <button className='btn btn-danger ms-3'>Efase</button>
-            //     </span>
-            // }
+            {
+                name: 'Opsyon',
+                cell : row => <span>
+                    <button className='btn btn-primary' onClick={()=>this.edit(row)}>Modifye</button>
+                    <button className='btn btn-danger ms-3'>Efase</button>
+                </span>
+            }
         ]
 
         if(this.state.load){
@@ -79,32 +111,26 @@ export default class Game extends Component{
             </div>
             <hr />
             <br />
-            <h4 className="text-success">{this.state.types.length} Tip Jwèt</h4>           
+            <div className="row">
+                <h4 className="text-success col">{this.state.games.length} Jwèt</h4>  
+                <button className='btn btn-secondary btn-sm col' onClick={this.openCreateModal}><i className="fa-solid fa-plus"></i> Kreye Jwèt</button>    
+            </div> 
+            <br />        
             <DataTable
                 columns={columns}
                 pagination={true}
                 fixedHeader={true}
                 striped={true}
-                data={this.state.types}
+                data={this.state.games}
                 />
-            {/* Modal */}
-            <Modal show={this.state.show} 
-                onHide={()=>this.setState({show:false})} 
-                animation={false}
-                centered>
-                <Modal.Header closeButton>
-                <Modal.Title>Modifye - {this.state.game.name}</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-                <Modal.Footer>
-                {/* <Button variant="secondary" onClick={handleClose}>
-                    Close
-                </Button>
-                <Button variant="primary" onClick={handleClose}>
-                    Save Changes
-                </Button> */}
-                </Modal.Footer>
-            </Modal>
+
+            <CreateGame
+                show={this.state.show}
+                hide={()=>this.setState({show:false})}
+                types={this.state.types}
+                save={this.save}
+                />
+                
         </div> 
         }
     }
