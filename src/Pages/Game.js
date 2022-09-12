@@ -65,7 +65,7 @@ export default class Game extends Component{
         const columns = [
             {
                 name: 'Imaj',
-                selector : row => row.image
+                selector : row => <span><img src={row.image} alt="" style={{width:40,height:40}} /></span>
             },
             {
                 name: 'Non',
