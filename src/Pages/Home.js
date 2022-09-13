@@ -18,7 +18,7 @@ export class Home extends Component{
                 console.log(res.data,"Profile");
                 this.setState({name:res.data.username});
             }).catch((err)=>{
-                console.log(err,'err home');
+                console.log(err);
             });
             this.setState({load:false});
         }

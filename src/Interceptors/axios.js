@@ -31,6 +31,13 @@ axios.interceptors.response.use(
     },
     function (error) {
 
+        let token = localStorage.getItem("token");
+
+        if(!token){
+            document.location.href = BASE_LOCAL+'/login';
+        }
+        
+        console.warn(error,"INTER");
         // If the response response is Unauthorize
         if(error.response.status === 401){
             console.warn(error,"INTERCEPTOR RESPONSE");

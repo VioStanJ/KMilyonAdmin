@@ -110,7 +110,7 @@ export default class Game extends Component{
             }
             console.log(response,"SAVE GAME");
         }).catch((err)=>{
-            console.warn(err,'FAIL GAME');
+            console.warn(err);
         });
     }
 
@@ -135,6 +135,7 @@ export default class Game extends Component{
     }
 
     render() {
+        
         const columns = [
             {
                 name: 'Imaj',
@@ -150,7 +151,7 @@ export default class Game extends Component{
             },
             {
                 name: 'Tip',
-                selector : row => row.game_type.name
+                selector : row => <b>{row.game_type.name}</b>
             },
             {
                 name: 'Deskripsyon',
@@ -160,7 +161,7 @@ export default class Game extends Component{
             {
                 name: 'Opsyon',
                 cell : row => <span>
-                    <button className='btn btn-primary' onClick={()=>this.edit(row)} data-bs-toggle="tooltip" data-bs-placement="top" title="Modifye"><i class="fa-solid fa-pen"></i></button>
+                    <button className='btn btn-primary' onClick={()=>this.edit(row)} data-bs-toggle="tooltip" data-bs-placement="top" title="Modifye"><i className="fa-solid fa-pen"></i></button>
                     {/* <button className='btn btn-danger ms-3' onClick={()=>this.delete(row)}>Efase</button> */}
                 </span>
             }
@@ -235,14 +236,14 @@ export default class Game extends Component{
                         <div className="md-5">
                             <label htmlFor="type">Tip Jwèt</label>
                             <Select
-                                    isClearable isSearchable
-                                    defaultValue={this.state.type}
-                                    value={this.state.type}
-                                    onChange={this.setType}
-                                    options={this.state.types.map((item) => {
-                                        return { value: item.id, label: item.name };
-                                    })} 
-                                    placeholder="Select Game Type"
+                                isClearable isSearchable
+                                defaultValue={this.state.type}
+                                value={this.state.type}
+                                onChange={this.setType}
+                                options={this.state.types.map((item) => {
+                                    return { value: item.id, label: item.name };
+                                })} 
+                                placeholder="Select Game Type"
                                 />
                         </div>
                         <br />

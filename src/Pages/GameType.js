@@ -26,7 +26,7 @@ export default class GameType extends Component{
                     this.setState({types:res.data.data});
                 }
             }).catch((err)=>{
-                console.log(err,'err game types');
+                console.log(err);
             });
             this.setState({load:false});
         }

@@ -6,7 +6,6 @@ import { Home } from './Pages/Home';
 import './Interceptors/axios';
 import Container from './Components/Container';
 import Ticket from './Pages/Ticket';
-import Welcome from './Pages/Welcome';
 import GameType from './Pages/GameType';
 import Game from './Pages/Game';
 
@@ -14,7 +13,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Welcome />} /> 
+        <Route path="/" element={<Container><Home /></Container>} /> 
         <Route path="/login" element={<Login />} /> 
         <Route path="/home" element={<Container><Home /></Container>} /> 
         <Route path="/ticket" element={<Container><Ticket /></Container>} /> 
