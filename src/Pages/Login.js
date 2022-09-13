@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { Component,useState } from 'react';
+import React, {useState } from 'react';
 import {BASE_URL} from '../Utils/Utils';
 import {Navigate} from 'react-router-dom';
 import qs from 'qs';
