@@ -4,6 +4,8 @@ import {Link} from 'react-router-dom';
 import DataTable from 'react-data-table-component';
 import CreateGame from '../Components/CreateGame';
 import FormData from 'form-data'
+import { Modal } from 'react-bootstrap';
+import Select from 'react-select';
 
 export default class Game extends Component{
 
@@ -16,13 +18,22 @@ export default class Game extends Component{
             show : false,
             game : {},
             create:false,
-            types:[]
+            types:[],
+            modal_title : '',
+            edit : false,
+            name : '',
+            description : '',
+            type_id : 0,
+            image : null,
+            temp : null,
+            type : {}
         }
     }
 
     componentDidMount(){
         if(this.state.load){
             this.refresh();
+            this.getTypes();
         }
     }
 
@@ -40,12 +51,20 @@ export default class Game extends Component{
         this.setState({load:false});
     }
 
-    edit = (type) => {
-        console.log(type);
-        // this.setState({show:true,game:type});
+    edit = (game) => {
+        console.log(game);
+        this.setState({modal_title:"Modifye Jwèt : "+game.name,edit:true,show:true,game:game,name:game.name,description:game.description,
+            type:{value : game.game_type.id,label:game.game_type.name}});
     }
 
     openCreateModal = () => {
+    
+        this.setState({modal_title:"Kreye Jwèt",edit:false});
+
+        this.setState({show:true});
+    }
+
+    getTypes = () => {
         axios.get("/gametypes/all").then((res)=>{
             this.setState({load:false});
             if(res.data.status === 200){
@@ -54,17 +73,23 @@ export default class Game extends Component{
         }).catch((err)=>{
             console.log(err,'err game types');
         });
-
-        this.setState({show:true});
     }
 
-    save = (data) => {
-        console.log(data);
+    save = () => {
+
+        console.log(this.state.edit);
         let dt = new FormData();
-        dt.append("type_id",data.type_id);
-        dt.append("name",data.name);
-        dt.append("description",data.description);
-        dt.append("image",data.image);
+        if(this.state.edit){
+            dt.append("id",this.state.game.id);
+        }
+        dt.append("type_id",this.state.type.value);
+        dt.append("name",this.state.name);
+        dt.append("description",this.state.description);
+        if(this.state.image === null || this.state.image === 'null'){
+            dt.append("image",null);
+        }else{
+            dt.append("image",this.state.image);
+        }
 
         const config = {
             withCredentials: true,
@@ -75,10 +100,11 @@ export default class Game extends Component{
 
         axios({
             method: 'POST',
-            url: "/games/create",
+            url: this.state.edit?"/games/edit":"/games/create",
             data: dt,
             config
         }).then( (response) => {
+            console.warn(response,"RPx");
             if(response.status === 200){
                 this.setState({show:false});
                 this.refresh();
@@ -87,6 +113,26 @@ export default class Game extends Component{
         }).catch((err)=>{
             console.warn(err,'FAIL GAME');
         });
+    }
+
+    delete = (game) => {
+        console.log(game);
+    }
+
+    handleFile = (e) => {
+        let file = e.target.files[0];
+        if(file == null){
+            return;
+        }
+        this.setState({ image: file, temp: URL.createObjectURL(e.target.files[0]) });
+    }
+
+    setType = (e) => {
+        if(e === null || e === 'null'){
+            this.setState({type:null});
+            return;
+        }
+        this.setState({type:e});
     }
 
     render() {
@@ -115,8 +161,8 @@ export default class Game extends Component{
             {
                 name: 'Opsyon',
                 cell : row => <span>
-                    <button className='btn btn-primary' onClick={()=>this.edit(row)}>Modifye</button>
-                    <button className='btn btn-danger ms-3'>Efase</button>
+                    <button className='btn btn-primary' onClick={()=>this.edit(row)} data-bs-toggle="tooltip" data-bs-placement="top" title="Modifye"><i class="fa-solid fa-pen"></i></button>
+                    {/* <button className='btn btn-danger ms-3' onClick={()=>this.delete(row)}>Efase</button> */}
                 </span>
             }
         ]
@@ -150,14 +196,69 @@ export default class Game extends Component{
                 striped={true}
                 data={this.state.games}
                 />
-
+{/* 
             <CreateGame
                 show={this.state.show}
                 hide={()=>this.setState({show:false})}
                 types={this.state.types}
                 save={this.save}
-                />
+                title={this.state.modal_title}
+                game={this.state.game}
+                edit={this.state.edit}
+                update={this.update}
+                /> */}
                 
+                <Modal show={this.state.show} 
+                onHide={()=>this.setState({show:false})} 
+                animation={true}
+                centered size="lg">
+                <Modal.Header closeButton>
+                <Modal.Title>{this.state.modal_title}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <form>
+                        <div className="mb-3">
+                            <label  htmlFor="name" className="form-label">Nom Jwèt la</label>
+                            <input type="email" className="form-control" id="name" aria-describedby="emailHelp"
+                                onChange={(e)=>this.setState({name:e.target.value})} value={this.state.name}/>
+                        </div>
+
+                        <div className="mb-3">
+                            <label  htmlFor="description" className="form-label">Dekri Jwèt la </label>
+                            <textarea className="form-control" id="description" rows="3" 
+                                onChange={(e)=>this.setState({description:e.target.value})}>{this.state.description}</textarea>
+                        </div>
+
+                        <div className="mb-3">
+                            <label  htmlFor="image" className="form-label">Imaj Jwèt la</label>
+                            <input className="form-control" type="file" id="image" onChange={this.handleFile}/>
+                        </div>
+                        <div className="md-5">
+                            <label htmlFor="type">Tip Jwèt</label>
+                            <Select
+                                    isClearable isSearchable
+                                    defaultValue={this.state.type}
+                                    value={this.state.type}
+                                    onChange={this.setType}
+                                    options={this.state.types.map((item) => {
+                                        return { value: item.id, label: item.name };
+                                    })} 
+                                    placeholder="Select Game Type"
+                                />
+                        </div>
+                        <br />
+                    </form>
+                </Modal.Body>
+                <Modal.Footer>
+                    
+                <button className='btn btn-secondary' variant="secondary" onClick={this.props.hide}>
+                Fèmen
+                </button>
+                <button className="btn btn-primary" onClick={this.save}>
+                    Anrejistre
+                </button>
+                </Modal.Footer>
+            </Modal>
         </div> 
         }
     }
