@@ -2,7 +2,6 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import DataTable from 'react-data-table-component';
-import CreateGame from '../Components/CreateGame';
 import FormData from 'form-data'
 import { Modal } from 'react-bootstrap';
 import Select from 'react-select';
