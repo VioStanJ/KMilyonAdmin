@@ -2,8 +2,8 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import DataTable from 'react-data-table-component';
-import { Modal } from 'react-bootstrap';
 import CreateGame from '../Components/CreateGame';
+import FormData from 'form-data'
 
 export default class Game extends Component{
 
@@ -27,6 +27,7 @@ export default class Game extends Component{
     }
 
     refresh = () => {
+        this.setState({load:true});
         axios.get("/games/all").then((res)=>{
             console.log(res,"Games");
             this.setState({load:false});
@@ -57,8 +58,35 @@ export default class Game extends Component{
         this.setState({show:true});
     }
 
-    save = () => {
-        console.log("saved");
+    save = (data) => {
+        console.log(data);
+        let dt = new FormData();
+        dt.append("type_id",data.type_id);
+        dt.append("name",data.name);
+        dt.append("description",data.description);
+        dt.append("image",data.image);
+
+        const config = {
+            withCredentials: true,
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded;charset=utf-8'
+            }
+        }
+
+        axios({
+            method: 'POST',
+            url: "/games/create",
+            data: dt,
+            config
+        }).then( (response) => {
+            if(response.status === 200){
+                this.setState({show:false});
+                this.refresh();
+            }
+            console.log(response,"SAVE GAME");
+        }).catch((err)=>{
+            console.warn(err,'FAIL GAME');
+        });
     }
 
     render() {
@@ -99,7 +127,6 @@ export default class Game extends Component{
             return <div className='container'>
             <div className="row">
                 <div>
-
                     <h4 className='text-success'>Jwèt</h4>
                     <nav aria-label="breadcrumb">
                         <ol className="breadcrumb ">

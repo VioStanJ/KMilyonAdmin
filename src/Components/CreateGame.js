@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Modal } from 'react-bootstrap';
+import Select from 'react-select';
 
 export default class CreateGame extends Component{
     
@@ -11,7 +12,8 @@ export default class CreateGame extends Component{
             description : '',
             type_id : 0,
             image : null,
-            temp : null
+            temp : null,
+            type : {}
         }
     }
     
@@ -25,6 +27,24 @@ export default class CreateGame extends Component{
             return;
         }
         this.setState({ image: file, temp: URL.createObjectURL(e.target.files[0]) });
+    }
+
+    setType = (e) => {
+        if(e === null || e === 'null'){
+            this.setState({type:null});
+            return;
+        }
+        this.setState({type:e});
+    }
+
+    save = () => {
+        const data = {
+            name : this.state.name,
+            description : this.state.description,
+            image : this.state.image,
+            type_id : this.state.type.value
+        }
+        this.props.save(data);
     }
 
     render() {
@@ -56,14 +76,16 @@ export default class CreateGame extends Component{
                         </div>
                         <div className="md-5">
                             <label html htmlFor="type">Tip Jwèt</label>
-                            <select className="form-select" aria-label="Default select example">
-                                <option></option>
-                                {
-                                    this.props.types.map((item,index)=>{
-                                        return <option value={item.id} key={index}>{item.name}</option>
-                                    })
-                                }
-                            </select>
+                            <Select
+                                    isClearable isSearchable
+                                    defaultValue={this.state.type}
+                                    value={this.state.type}
+                                    onChange={this.setType}
+                                    options={this.props.types.map((item) => {
+                                        return { value: item.id, label: item.name };
+                                    })} 
+                                    placeholder="Select Game Type"
+                                />
                         </div>
                         <br />
                     </form>
@@ -72,7 +94,7 @@ export default class CreateGame extends Component{
                 <button className='btn btn-secondary' variant="secondary" onClick={this.props.hide}>
                     Close
                 </button>
-                <button className="btn btn-primary" onClick={this.props.save}>
+                <button className="btn btn-primary" onClick={this.save}>
                     Save Changes
                 </button>
                 </Modal.Footer>
