@@ -1,6 +1,6 @@
 import React from 'react'
 import './App.css';
-import { Login } from './Pages/Login';
+import Login  from './Pages/Login';
 import {BrowserRouter,Route, Switch} from 'react-router-dom';
 import { Home } from './Pages/Home';
 import './Interceptors/axios';
