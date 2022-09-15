@@ -1,7 +1,7 @@
 import React from 'react'
 import './App.css';
 import { Login } from './Pages/Login';
-import {BrowserRouter,Routes,Route} from 'react-router-dom';
+import {BrowserRouter,Route, Switch} from 'react-router-dom';
 import { Home } from './Pages/Home';
 import './Interceptors/axios';
 import Container from './Components/Container';
@@ -13,15 +13,15 @@ import ManageGame from './Pages/ManageGame';
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Container><Home /></Container>} /> 
-        <Route path="/login" element={<Login />} /> 
-        <Route path="/home" element={<Container><Home /></Container>} /> 
-        <Route path="/ticket" element={<Container><Ticket /></Container>} /> 
-        <Route path="/gametype" element={<Container><GameType /></Container>} /> 
-        <Route path="/game" element={<Container><Game /></Container>} /> 
-        <Route path="/game/manage/:slug" element={<Container><ManageGame /></Container>} /> 
-      </Routes>
+      <Switch>
+        <Route exact path="/" component={()=><Container><Home /></Container>} /> 
+        <Route exact path="/login" component={()=><Login />} /> 
+        <Route exact path="/home" component={()=><Container><Home /></Container>} /> 
+        <Route exact path="/ticket" component={()=><Container><Ticket /></Container>} /> 
+        <Route exact path="/gametype" component={()=><Container><GameType /></Container>} /> 
+        <Route exact path="/game" component={()=><Container><Game /></Container>} /> 
+        <Route exact path="/game/manage/:slug" component={()=><Container><ManageGame /></Container>} /> 
+      </Switch>
     </BrowserRouter>
   );
 }

@@ -166,7 +166,7 @@ export default class Game extends Component{
                 name: 'Opsyon',
                 cell : row => <span>
                     <button className='btn btn-primary' onClick={()=>this.edit(row)} data-bs-toggle="tooltip" data-bs-placement="top" title="Modifye"><i className="fa-solid fa-pen"></i></button>
-                    <Link to={"/game/manage/"+row.slug} className='btn btn-warning mx-3' data-bs-toggle="tooltip" data-bs-placement="top" title="Jere"><i class="fas fa-tools"></i></Link>
+                    <Link to={"/game/manage/"+row.slug} className='btn btn-warning mx-3' data-bs-toggle="tooltip" data-bs-placement="top" title="Jere"><i className="fas fa-tools"></i></Link>
                 </span>
             }
         ]

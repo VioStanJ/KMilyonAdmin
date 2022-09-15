@@ -10,7 +10,7 @@ export const Login = () => {
 
     const [username,setUsername] = useState('');
     const [password,setPassword] = useState('');
-    const [navigate,setNavigate] = useState(false);
+    // const [navigate,setNavigate] = useState(false);
 
     const send = async e => {
         e.preventDefault();
@@ -36,7 +36,7 @@ export const Login = () => {
           localStorage.setItem('refresh',response.data.refreshToken);
 
           setTimeout(()=>{
-            setNavigate(true);
+            // setNavigate(true);
           },1000)
 
           console.log(response.data.accessToken,response.data.refreshToken);
@@ -46,9 +46,9 @@ export const Login = () => {
 
     }
 
-    if(navigate){
-        return <Navigate to="/home"/>
-    }
+    // if(navigate){
+    //     return <Navigate to="/home"/>
+    // }
 
     return (
       <div className='flex-row form_bg' style={{backgroundImage:'url('+bg+')'}}>
