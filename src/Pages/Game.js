@@ -134,6 +134,10 @@ export default class Game extends Component{
         this.setState({type:e});
     }
 
+    manage = (game) => {
+        console.log(game);
+    }
+
     render() {
         
         const columns = [
@@ -162,7 +166,7 @@ export default class Game extends Component{
                 name: 'Opsyon',
                 cell : row => <span>
                     <button className='btn btn-primary' onClick={()=>this.edit(row)} data-bs-toggle="tooltip" data-bs-placement="top" title="Modifye"><i className="fa-solid fa-pen"></i></button>
-                    {/* <button className='btn btn-danger ms-3' onClick={()=>this.delete(row)}>Efase</button> */}
+                    <Link to={"/game/manage/"+row.slug} className='btn btn-warning mx-3' data-bs-toggle="tooltip" data-bs-placement="top" title="Jere"><i class="fas fa-tools"></i></Link>
                 </span>
             }
         ]
@@ -196,17 +200,6 @@ export default class Game extends Component{
                 striped={true}
                 data={this.state.games}
                 />
-{/* 
-            <CreateGame
-                show={this.state.show}
-                hide={()=>this.setState({show:false})}
-                types={this.state.types}
-                save={this.save}
-                title={this.state.modal_title}
-                game={this.state.game}
-                edit={this.state.edit}
-                update={this.update}
-                /> */}
                 
                 <Modal show={this.state.show} 
                 onHide={()=>this.setState({show:false})} 
@@ -251,7 +244,7 @@ export default class Game extends Component{
                 </Modal.Body>
                 <Modal.Footer>
                     
-                <button className='btn btn-secondary' variant="secondary" onClick={this.props.hide}>
+                <button className='btn btn-secondary' variant="secondary" onClick={()=>this.setState({show:false})}>
                 Fèmen
                 </button>
                 <button className="btn btn-primary" onClick={this.save}>

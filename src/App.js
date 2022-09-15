@@ -8,6 +8,7 @@ import Container from './Components/Container';
 import Ticket from './Pages/Ticket';
 import GameType from './Pages/GameType';
 import Game from './Pages/Game';
+import ManageGame from './Pages/ManageGame';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/ticket" element={<Container><Ticket /></Container>} /> 
         <Route path="/gametype" element={<Container><GameType /></Container>} /> 
         <Route path="/game" element={<Container><Game /></Container>} /> 
+        <Route path="/game/manage/:slug" element={<Container><ManageGame /></Container>} /> 
       </Routes>
     </BrowserRouter>
   );

@@ -37,10 +37,9 @@ axios.interceptors.response.use(
             document.location.href = BASE_LOCAL+'/login';
         }
         
-        console.warn(error,"INTER");
+        console.log(error,"TOKEN FAIL OR EXPIRED");
         // If the response response is Unauthorize
-        if(error.response.status === 401){
-            console.warn(error,"INTERCEPTOR RESPONSE");
+        if(error.response.status === 403){
 
             // let token = localStorage.getItem('refresh');
             // axios.defaults.headers.common['Authorization'] = 'Bearer '+token;
