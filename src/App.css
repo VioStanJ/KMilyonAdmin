@@ -1,4 +1,8 @@
 
+.flex{
+  display: flex!important;
+}
+
 .orange{
   color: #FFC606!important;
 }
