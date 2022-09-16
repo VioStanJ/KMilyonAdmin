@@ -107,11 +107,15 @@ class ManageGame extends Component{
         id:draw.id});
     }
 
+    getTicket = (draw) => {
+
+    }
+
     render() {
         const columns = [
             {
-                name: 'ID',
-                selector : row => <b>{row.id}</b>
+                name: 'Ekspire',
+                selector : row => <span>{(!row.expired?<i class="text-success fa-solid fa-check"></i>:<i class="text-danger fa-solid fa-xmark"></i>)}{(row.with_user?<i class="text-primary fa-solid fa-users"></i>:'')}</span>
             },
             {
                 name: 'Demare A',
@@ -127,29 +131,20 @@ class ManageGame extends Component{
             },
             {
                 name: 'Ekspirasyon',
-                selector: row => row.expiration_at,
-                sortable: true,
-            },
-            {
-                name: 'Ak Itilizatè',
-                selector: row => row.with_user,
-                sortable: true,
-            },
-            {
-                name: 'Ekspire',
-                selector: row => row.expired,
+                selector: row => <span>{moment(row.expiration_at).format('LLL')}</span>,
                 sortable: true,
             },
             {
                 name: 'Dat Kreyasyon',
-                selector: row => row.created_at,
+                selector: row => <span>{moment(row.created_at).format('LLL')}</span>,
                 sortable: true,
             },
             {
                 name: 'Opsyon',
                 cell : row => <div className="flex">
                     <button className='btn btn-primary' onClick={()=>this.edit(row)} data-bs-toggle="tooltip" data-bs-placement="top" title="Modifye"><i className="fa-solid fa-pen"></i></button>
-                    <Link to={"/game/manage/"+this.state.game.slug+"/ticket"} className='btn btn-warning mx-3' data-bs-toggle="tooltip" data-bs-placement="top" title="Jere"><i className="fas fa-tools"></i></Link>
+                    <button className='btn btn-success mx-1' onClick={()=>this.getTicket(row)} data-bs-toggle="tooltip" data-bs-placement="top" title="Modifye"><i class="fa-solid fa-table"></i></button>
+                    <Link to={"/game/manage/"+this.state.game.slug+"/ticket"} className='btn btn-warning mx-1' data-bs-toggle="tooltip" data-bs-placement="top" title="Jere"><i className="fas fa-tools"></i></Link>
                 </div>
             }
         ];
@@ -243,6 +238,7 @@ class ManageGame extends Component{
                                             onChange={(e)=>this.setState({price:e.target.value})} value={this.state.price} required/>
                                     </div>
 
+                                    <div><i class="text-primary fa-solid fa-users"></i></div>
                                     <div className="form-check">
                                         <input className="form-check-input" type="checkbox" id="flexCheckChecked" checked={this.state.with_user} onChange={()=>this.setState({with_user:!this.state.with_user})} />
                                         <label className="form-check-label" htmlFor="flexCheckChecked">
