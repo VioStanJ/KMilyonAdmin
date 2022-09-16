@@ -29,12 +29,12 @@ export default class NavBar extends Component{
                   Tip Jwèt
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link to="/ticket" className="nav-link text-white">
                 <i className="fa-solid fa-ticket"></i>
                   Tikè
                 </Link>
-              </li>
+              </li> */}
             </ul>
             <hr/>
             <div className="dropdown">

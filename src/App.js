@@ -17,10 +17,10 @@ function App() {
         <Route exact path="/" component={()=><Container><Home /></Container>} /> 
         <Route exact path="/login" component={()=><Login />} /> 
         <Route exact path="/home" component={()=><Container><Home /></Container>} /> 
-        <Route exact path="/ticket" component={()=><Container><Ticket /></Container>} /> 
         <Route exact path="/gametype" component={()=><Container><GameType /></Container>} /> 
         <Route exact path="/game" component={()=><Container><Game /></Container>} /> 
         <Route exact path="/game/manage/:slug" component={()=><Container><ManageGame /></Container>} /> 
+        <Route exact path="/game/manage/:slug/ticket" component={()=><Container><Ticket /></Container>} /> 
       </Switch>
     </BrowserRouter>
   );
