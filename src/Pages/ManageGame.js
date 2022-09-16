@@ -5,6 +5,7 @@ import DataTable from 'react-data-table-component';
 import { Modal } from 'react-bootstrap';
 import qs from 'qs';
 import moment from 'moment/moment';
+import Ticket from '../Container/Ticket';
 
 class ManageGame extends Component{
 
@@ -23,7 +24,9 @@ class ManageGame extends Component{
             with_user:false,
             edit : false,
             title:"Kreye Tiraj",
-            id : 0
+            id : 0,
+            list:false,
+            tickets:[]
         }
     }
 
@@ -101,7 +104,17 @@ class ManageGame extends Component{
     }
 
     getTicket = (draw) => {
-
+        axios({
+            method:"GET",
+            url:"/tickets/all/"+draw.id,
+        }).then((res)=>{
+            console.log(res,"ALL");
+            if(res.status === 200){
+                this.setState({list:true,tickets:res.data.data});
+            }
+        }).catch((err)=>{
+            console.warn(err);
+        });
     }
 
     delete = () => {
@@ -211,6 +224,12 @@ class ManageGame extends Component{
                             fixedHeader={true}
                             striped={true}
                             data={this.state.draws}
+                            />
+
+                        <Ticket
+                            show={this.state.list}
+                            hide={()=>this.setState({list:false})}
+                            tickets={this.state.tickets}
                             />
 
                         <Modal show={this.state.show} 
