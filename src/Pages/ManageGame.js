@@ -49,13 +49,6 @@ class ManageGame extends Component{
     save = (e) => {
         e.preventDefault();
 
-        const config = {
-            withCredentials: true,
-            headers: {
-                'content-type': 'application/x-www-form-urlencoded;charset=utf-8'
-            }
-        }
-
         let date = moment(this.state.expiration).format('yyyy-MM-DD HH:mm');
 
         const dt = {
@@ -111,11 +104,26 @@ class ManageGame extends Component{
 
     }
 
+    delete = () => {
+        axios({
+            method:"DELETE",
+            url:"/ticketdraws/delete/"+this.state.id,
+        }).then((res)=>{
+            console.log(res);
+            if(res.status === 200){
+                this.clean();
+                this.refresh();
+            }
+        }).catch((err)=>{
+            console.warn(err);
+        });
+    }
+
     render() {
         const columns = [
             {
                 name: 'Ekspire',
-                selector : row => <span>{(!row.expired?<i class="text-success fa-solid fa-check"></i>:<i class="text-danger fa-solid fa-xmark"></i>)}{(row.with_user?<i class="text-primary fa-solid fa-users"></i>:'')}</span>
+                selector : row => <span>{(!row.expired?<i className="text-success fa-solid fa-check"></i>:<i className="text-danger fa-solid fa-xmark"></i>)}{(row.with_user?<i className="text-primary fa-solid fa-users"></i>:'')}</span>
             },
             {
                 name: 'Demare A',
@@ -143,7 +151,7 @@ class ManageGame extends Component{
                 name: 'Opsyon',
                 cell : row => <div className="flex">
                     <button className='btn btn-primary' onClick={()=>this.edit(row)} data-bs-toggle="tooltip" data-bs-placement="top" title="Modifye"><i className="fa-solid fa-pen"></i></button>
-                    <button className='btn btn-success mx-1' onClick={()=>this.getTicket(row)} data-bs-toggle="tooltip" data-bs-placement="top" title="Modifye"><i class="fa-solid fa-table"></i></button>
+                    <button className='btn btn-success mx-1' onClick={()=>this.getTicket(row)} data-bs-toggle="tooltip" data-bs-placement="top" title="Modifye"><i className="fa-solid fa-table"></i></button>
                     <Link to={"/game/manage/"+this.state.game.slug+"/ticket"} className='btn btn-warning mx-1' data-bs-toggle="tooltip" data-bs-placement="top" title="Jere"><i className="fas fa-tools"></i></Link>
                 </div>
             }
@@ -238,7 +246,7 @@ class ManageGame extends Component{
                                             onChange={(e)=>this.setState({price:e.target.value})} value={this.state.price} required/>
                                     </div>
 
-                                    <div><i class="text-primary fa-solid fa-users"></i></div>
+                                    <div><i className="text-primary fa-solid fa-users"></i></div>
                                     <div className="form-check">
                                         <input className="form-check-input" type="checkbox" id="flexCheckChecked" checked={this.state.with_user} onChange={()=>this.setState({with_user:!this.state.with_user})} />
                                         <label className="form-check-label" htmlFor="flexCheckChecked">
@@ -256,6 +264,14 @@ class ManageGame extends Component{
                                             this.state.edit?'Modifye':'Anrejistre'
                                         }
                                     </button>
+
+                                    {
+                                        this.state.edit?
+                                            <button className='btn btn-danger mx-5' variant="secondary" type='button' onClick={this.delete}>
+                                            Efase
+                                            </button>
+                                        :null
+                                    }
                                 </form>
                             </Modal.Body>
                         </Modal>
