@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Link, withRouter } from 'react-router-dom';
 import DataTable from 'react-data-table-component';
+import { Modal } from 'react-bootstrap';
+import qs from 'qs';
+import moment from 'moment/moment';
 
 class ManageGame extends Component{
 
@@ -11,7 +14,13 @@ class ManageGame extends Component{
             load : true,
             game : {},
             draws : [],
-            type : {}
+            type : {},
+            show : false,
+            from : null,
+            to:null,
+            expiration:null,
+            price:null,
+            with_user:false
         }
     }
 
@@ -33,6 +42,54 @@ class ManageGame extends Component{
             console.log(err,'err games');
         });
         this.setState({load:false});
+    }
+
+    save = (e) => {
+        e.preventDefault();
+
+        const config = {
+            withCredentials: true,
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded;charset=utf-8'
+            }
+        }
+
+        let date = moment(this.state.expiration).format('yyyy-MM-DD HH:mm');
+
+        const dt = {
+            start_from : this.state.from,
+            end_to : this.state.to,
+            expiration_at : date,
+            price : this.state.price,
+            with_user : this.state.with_user,
+            game_id : this.state.game.id
+        }
+
+        console.log(dt);
+        
+        axios({
+            method:"POST",
+            url:"/ticketdraws/create",
+            data : qs.stringify(dt)
+        }).then((res)=>{
+            if(res.status === 200){
+                this.clean();
+                this.refresh();
+            }
+        }).catch((err)=>{
+            console.warn(err);
+        });
+    }
+
+    clean = () => {
+        this.setState({
+            show : false,
+            from : null,
+            to:null,
+            expiration:null,
+            price:null,
+            with_user:false
+        });
     }
 
     render() {
@@ -125,7 +182,11 @@ class ManageGame extends Component{
                     </div>
 
                     <div className="col-7">
-
+                        <div className="row">
+                            <h4 className="text-success col">Lis Tiraj Yo</h4>  
+                            <button className='btn btn-secondary btn-sm col' onClick={()=>this.setState({show:true})}><i className="fa-solid fa-plus"></i> Kreye Tiraj</button>    
+                        </div> 
+                        <br />
                         <DataTable
                             columns={columns}
                             pagination={true}
@@ -133,6 +194,59 @@ class ManageGame extends Component{
                             striped={true}
                             data={this.state.draws}
                             />
+
+                        <Modal show={this.state.show} 
+                            onHide={()=>this.setState({show:false})} 
+                            animation={true}
+                            centered size="lg">
+                            <Modal.Header closeButton>
+                            <Modal.Title>Kreye Tiraj</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <form onSubmit={this.save}>
+                                    <div className="mb-3">
+                                        <label  htmlFor="start_from" className="form-label">Premye Nimero Tikè</label>
+                                        <input type="number" className="form-control" id="start_from" aria-describedby="emailHelp"
+                                            onChange={(e)=>this.setState({from:e.target.value})} value={this.state.from} required/>
+                                    </div>
+
+                                    <div className="mb-3">
+                                        <label  htmlFor="end_to" className="form-label">Dènye Nimero Tikè</label>
+                                        <input type="number" className="form-control" id="end_to" aria-describedby="emailHelp"
+                                            onChange={(e)=>this.setState({to:e.target.value})} value={this.state.to} required/>
+                                    </div>
+
+                                    <div className="mb-3">
+                                        <label  htmlFor="expiration" className="form-label">Date ekspirasyon Tiraj la</label>
+                                        <input type="datetime-local" className="form-control" id="expiration" aria-describedby="emailHelp"
+                                            onChange={(e)=>this.setState({expiration:e.target.value})} value={this.state.expiration} required/>
+                                    </div>
+
+                                    <div className="mb-3">
+                                        <label  htmlFor="price" className="form-label">Pri Tikè</label>
+                                        <input type="number" className="form-control" id="price" aria-describedby="emailHelp"
+                                            onChange={(e)=>this.setState({price:e.target.value})} value={this.state.price} required/>
+                                    </div>
+
+                                    <div className="form-check">
+                                        <input className="form-check-input" type="checkbox" id="flexCheckChecked" checked={this.state.with_user} onChange={()=>this.setState({with_user:!this.state.with_user})}/>
+                                        <label className="form-check-label" htmlFor="flexCheckChecked">
+                                            Tikè pou itilizatè
+                                        </label>
+                                    </div>
+
+                                        <br />
+
+                                    <button className='btn btn-secondary mx-5' variant="secondary" onClick={()=>this.setState({show:false})}>
+                                    Fèmen
+                                    </button>
+                                    <button className="btn btn-primary" type='submit'>
+                                        Anrejistre
+                                    </button>
+                                </form>
+                            </Modal.Body>
+                        </Modal>
+
                     </div>
                 </div>
             </div>
