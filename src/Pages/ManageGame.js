@@ -20,7 +20,10 @@ class ManageGame extends Component{
             to:null,
             expiration:null,
             price:null,
-            with_user:false
+            with_user:false,
+            edit : false,
+            title:"Kreye Tiraj",
+            id : 0
         }
     }
 
@@ -33,7 +36,6 @@ class ManageGame extends Component{
         const slug = this.props.match.params.slug;
 
         axios.get("/games/show/"+slug).then((res)=>{
-            console.log(res,"SHow");
             this.setState({load:false});
             if(res.data.status === 200){
                 this.setState({game:res.data.data.game,type:res.data.data.game.game_type,draws:res.data.data.draws});
@@ -62,16 +64,18 @@ class ManageGame extends Component{
             expiration_at : date,
             price : this.state.price,
             with_user : this.state.with_user,
-            game_id : this.state.game.id
+            game_id : this.state.game.id,
+            id : this.state.id
         }
 
         console.log(dt);
         
         axios({
             method:"POST",
-            url:"/ticketdraws/create",
+            url:"/ticketdraws/"+(this.state.edit?"edit":"create"),
             data : qs.stringify(dt)
         }).then((res)=>{
+            console.log(res);
             if(res.status === 200){
                 this.clean();
                 this.refresh();
@@ -88,8 +92,19 @@ class ManageGame extends Component{
             to:null,
             expiration:null,
             price:null,
-            with_user:false
+            with_user:false,
         });
+    }
+
+    edit = (draw) => {
+        console.log(draw);
+        this.setState({show:true,edit:true,title:"Modifye Tiraj",
+        from:draw.start_from,
+        to:draw.end_to,
+        expiration:moment(draw.expiration_at).format("yyyy-MM-DD HH:mm"),
+        price:draw.price,
+        with_user:draw.with_user,
+        id:draw.id});
     }
 
     render() {
@@ -132,10 +147,10 @@ class ManageGame extends Component{
             },
             {
                 name: 'Opsyon',
-                cell : row => <span>
-                    {/* <button className='btn btn-primary' onClick={()=>this.edit(row)} data-bs-toggle="tooltip" data-bs-placement="top" title="Modifye"><i className="fa-solid fa-pen"></i></button> */}
+                cell : row => <div className="flex">
+                    <button className='btn btn-primary' onClick={()=>this.edit(row)} data-bs-toggle="tooltip" data-bs-placement="top" title="Modifye"><i className="fa-solid fa-pen"></i></button>
                     <Link to={"/game/manage/"+this.state.game.slug+"/ticket"} className='btn btn-warning mx-3' data-bs-toggle="tooltip" data-bs-placement="top" title="Jere"><i className="fas fa-tools"></i></Link>
-                </span>
+                </div>
             }
         ];
 
@@ -184,7 +199,7 @@ class ManageGame extends Component{
                     <div className="col-7">
                         <div className="row">
                             <h4 className="text-success col">Lis Tiraj Yo</h4>  
-                            <button className='btn btn-secondary btn-sm col' onClick={()=>this.setState({show:true})}><i className="fa-solid fa-plus"></i> Kreye Tiraj</button>    
+                            <button className='btn btn-secondary btn-sm col' onClick={()=>this.setState({show:true,title:"Kreye Tiraj",edit:false})}><i className="fa-solid fa-plus"></i> Kreye Tiraj</button>    
                         </div> 
                         <br />
                         <DataTable
@@ -200,20 +215,20 @@ class ManageGame extends Component{
                             animation={true}
                             centered size="lg">
                             <Modal.Header closeButton>
-                            <Modal.Title>Kreye Tiraj</Modal.Title>
+                            <Modal.Title>{this.state.title}</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
                                 <form onSubmit={this.save}>
                                     <div className="mb-3">
                                         <label  htmlFor="start_from" className="form-label">Premye Nimero Tikè</label>
                                         <input type="number" className="form-control" id="start_from" aria-describedby="emailHelp"
-                                            onChange={(e)=>this.setState({from:e.target.value})} value={this.state.from} required/>
+                                            onChange={(e)=>this.setState({from:e.target.value})} value={this.state.from} required disabled={this.state.edit?true:false}/>
                                     </div>
 
                                     <div className="mb-3">
                                         <label  htmlFor="end_to" className="form-label">Dènye Nimero Tikè</label>
                                         <input type="number" className="form-control" id="end_to" aria-describedby="emailHelp"
-                                            onChange={(e)=>this.setState({to:e.target.value})} value={this.state.to} required/>
+                                            onChange={(e)=>this.setState({to:e.target.value})} value={this.state.to} required disabled={this.state.edit?true:false}/>
                                     </div>
 
                                     <div className="mb-3">
@@ -229,7 +244,7 @@ class ManageGame extends Component{
                                     </div>
 
                                     <div className="form-check">
-                                        <input className="form-check-input" type="checkbox" id="flexCheckChecked" checked={this.state.with_user} onChange={()=>this.setState({with_user:!this.state.with_user})}/>
+                                        <input className="form-check-input" type="checkbox" id="flexCheckChecked" checked={this.state.with_user} onChange={()=>this.setState({with_user:!this.state.with_user})} />
                                         <label className="form-check-label" htmlFor="flexCheckChecked">
                                             Tikè pou itilizatè
                                         </label>
@@ -241,7 +256,9 @@ class ManageGame extends Component{
                                     Fèmen
                                     </button>
                                     <button className="btn btn-primary" type='submit'>
-                                        Anrejistre
+                                        {
+                                            this.state.edit?'Modifye':'Anrejistre'
+                                        }
                                     </button>
                                 </form>
                             </Modal.Body>
