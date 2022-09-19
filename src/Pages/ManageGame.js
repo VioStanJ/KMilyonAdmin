@@ -6,6 +6,7 @@ import { Modal } from 'react-bootstrap';
 import qs from 'qs';
 import moment from 'moment/moment';
 import Ticket from '../Container/Ticket';
+import {BASE_URL} from '../Utils/Utils';
 
 class ManageGame extends Component{
 
@@ -165,7 +166,7 @@ class ManageGame extends Component{
                 cell : row => <div className="flex">
                     <button className='btn btn-primary' onClick={()=>this.edit(row)} data-bs-toggle="tooltip" data-bs-placement="top" title="Modifye"><i className="fa-solid fa-pen"></i></button>
                     <button className='btn btn-success mx-1' onClick={()=>this.getTicket(row)} data-bs-toggle="tooltip" data-bs-placement="top" title="Modifye"><i className="fa-solid fa-table"></i></button>
-                    <Link to={"/game/manage/"+this.state.game.slug+"/ticket"} className='btn btn-warning mx-1' data-bs-toggle="tooltip" data-bs-placement="top" title="Jere"><i className="fas fa-tools"></i></Link>
+                    {/* <Link to={"/game/manage/"+this.state.game.slug+"/ticket"} className='btn btn-warning mx-1' data-bs-toggle="tooltip" data-bs-placement="top" title="Jere"><i className="fas fa-tools"></i></Link> */}
                 </div>
             }
         ];
@@ -178,7 +179,7 @@ class ManageGame extends Component{
 
                     <div className="col-3">
                         <div className="card">
-                            <img src={'https://via.placeholder.com/100'} className="card-img-top" alt={this.state.game.name}/>
+                            <img src={BASE_URL+this.state.game.image} className="card-img-top" alt={this.state.game.name}/>
                             <ul className="list-group">
                                 <li className="list-group-item">
                                     <div className="row">

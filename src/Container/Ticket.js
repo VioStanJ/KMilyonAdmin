@@ -40,7 +40,7 @@ class Ticket extends Component{
             },
             {
                 name: 'Dat Acha',
-                selector: row => <span>{moment(row.buying_date).format('LLL')}</span>,
+                selector: row => <span>{moment(row.buying_date).format('LLL')??'--'}</span>,
                 sortable: true,
             }
         ];
@@ -55,10 +55,12 @@ class Ticket extends Component{
             <Modal.Body>
 
                 <DataTable
+                    theme="solarized"
                     columns={columns}
                     pagination={true}
                     fixedHeader={true}
                     striped={true}
+                    filtered={true}
                     data={this.props.tickets}
                     />
 

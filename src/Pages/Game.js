@@ -5,6 +5,7 @@ import DataTable from 'react-data-table-component';
 import FormData from 'form-data'
 import { Modal } from 'react-bootstrap';
 import Select from 'react-select';
+import {BASE_URL} from '../Utils/Utils';
 
 export default class Game extends Component{
 
@@ -143,7 +144,7 @@ export default class Game extends Component{
         const columns = [
             {
                 name: 'Imaj',
-                selector : row => <span><img src={row.image} alt="" style={{width:40,height:40}} /></span>
+                selector : row => <span><img src={BASE_URL+row.image} alt="" style={{width:40,height:40}} /></span>
             },
             {
                 name: 'Non',
